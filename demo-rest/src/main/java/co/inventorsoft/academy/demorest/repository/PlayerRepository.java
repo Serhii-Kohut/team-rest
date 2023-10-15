@@ -1,0 +1,16 @@
+package co.inventorsoft.academy.demorest.repository;
+
+import co.inventorsoft.academy.demorest.entity.Player;
+import co.inventorsoft.academy.demorest.entity.TeamCategory;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface PlayerRepository extends JpaRepository<Player, Long> {
+    @Override
+    Optional<Player> findById(Long id);
+    List<Player> findPlayersByTeamCategoryId(Long id);
+}
