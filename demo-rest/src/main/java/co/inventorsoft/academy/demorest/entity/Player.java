@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Player {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -28,4 +29,5 @@ public class Player {
     @ManyToOne
     @JoinColumn(name = "teamCategory_id")
     private TeamCategory teamCategory;
+
 }
