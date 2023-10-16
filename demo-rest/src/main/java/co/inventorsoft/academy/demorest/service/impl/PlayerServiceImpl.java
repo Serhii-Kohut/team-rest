@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -19,48 +19,67 @@ public class PlayerServiceImpl implements PlayerService {
     private final PlayerRepository playerRepository;
     private final TeamCategoryRepository teamCategoryRepository;
 
-    public Player create(PlayerDTO playerDTO) {
+    public PlayerDTO create(PlayerDTO playerDTO) {
         TeamCategory teamCategory = teamCategoryRepository.findById(playerDTO.getTeamCategoryId())
                 .orElseThrow(() -> new EntityNotFoundException("TeamCategory with id " + playerDTO.getTeamCategoryId() + " does not exist"));
 
-        return playerRepository.save(Player.builder()
+        Player player = playerRepository.save(Player.builder()
                 .playerName(playerDTO.getPlayerName())
                 .nationality(playerDTO.getNationality())
                 .shirtNumber(playerDTO.getShirtNumber())
                 .playerPosition(playerDTO.getPlayerPosition())
                 .teamCategory(teamCategory)
                 .build());
+
+        return convertPlayerToDto(player);
     }
 
-    public List<Player> readAllPlayers() {
-        return playerRepository.findAll();
+    public List<PlayerDTO> readAllPlayers() {
+        List<Player> players = playerRepository.findAll();
+        return players.stream()
+                .map(this::convertPlayerToDto)
+                .collect(Collectors.toList());
     }
 
-    public List<Player> readByCategoryId(Long id) {
-        TeamCategory teamCategory = teamCategoryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("TeamCategory with id " + id + " does not exist"));
-
-        return playerRepository.findPlayersByTeamCategoryId(id);
+    public List<PlayerDTO> readByCategoryId(Long id) {
+        List<Player> players = playerRepository.findPlayersByTeamCategoryId(id);
+        return players.stream()
+                .map(this::convertPlayerToDto)
+                .collect(Collectors.toList());
     }
 
-    public Player update(Long id, PlayerDTO playerDTO) {
+    public PlayerDTO update(Long id, PlayerDTO playerDTO) {
         Player player = playerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Player not found"));
         TeamCategory teamCategory = teamCategoryRepository.findById(playerDTO.getTeamCategoryId())
                 .orElseThrow(() -> new EntityNotFoundException("TeamCategory with id " + playerDTO.getTeamCategoryId() + " does not exist"));
 
-        player.setPlayerName(playerDTO.getPlayerName());
-        player.setNationality(playerDTO.getNationality());
-        player.setShirtNumber(playerDTO.getShirtNumber());
-        player.setPlayerPosition(playerDTO.getPlayerPosition());
-        player.setTeamCategory(teamCategory);
-        return playerRepository.save(player);
+        Player updatedPlayer = Player.builder()
+                .id(player.getId())
+                .playerName(playerDTO.getPlayerName())
+                .nationality(playerDTO.getNationality())
+                .shirtNumber(playerDTO.getShirtNumber())
+                .playerPosition(playerDTO.getPlayerPosition())
+                .teamCategory(teamCategory)
+                .build();
+
+        playerRepository.save(updatedPlayer);
+        return convertPlayerToDto(updatedPlayer);
     }
 
+
     public void delete(Long id) {
-        if (!playerRepository.existsById(id)) {
-            throw new NoSuchElementException("Player with id " + id + " does not exist");
-        }
         playerRepository.deleteById(id);
+    }
+
+    private PlayerDTO convertPlayerToDto(Player player) {
+        return PlayerDTO.builder()
+                .id(player.getId())
+                .playerName(player.getPlayerName())
+                .nationality(player.getNationality())
+                .shirtNumber(player.getShirtNumber())
+                .playerPosition(player.getPlayerPosition())
+                .teamCategoryId(player.getTeamCategory().getId())
+                .build();
     }
 }
 

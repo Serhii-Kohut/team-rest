@@ -1,11 +1,11 @@
 package co.inventorsoft.academy.demorest.service;
 
-import co.inventorsoft.academy.demorest.entity.TeamCategory;
+import co.inventorsoft.academy.demorest.dto.TeamCategoryDTO;
 
 import java.util.List;
 
 public interface TeamCategoryService {
-    List<TeamCategory> readAll();
+    List<TeamCategoryDTO> readAll();
 
-    TeamCategory readById(Long id);
+    TeamCategoryDTO readById(Long id);
 }
