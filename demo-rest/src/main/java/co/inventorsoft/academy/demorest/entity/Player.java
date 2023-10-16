@@ -22,7 +22,7 @@ public class Player {
     private Long id;
     private String playerName;
     private String nationality;
-    private Short shirtNumber;
+    private Long shirtNumber;
     private PlayerPosition playerPosition;
 
     @ManyToOne
