@@ -1,13 +1,10 @@
 package co.inventorsoft.academy.demorest.controller;
 
 import co.inventorsoft.academy.demorest.dto.PlayerDTO;
-import co.inventorsoft.academy.demorest.entity.Player;
 import co.inventorsoft.academy.demorest.service.PlayerService;
-import co.inventorsoft.academy.demorest.service.impl.PlayerServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,36 +23,29 @@ import java.util.List;
 public class PlayerController {
     private final PlayerService playerService;
 
-    @PostMapping
+    @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public Player create(@RequestBody @Valid PlayerDTO playerDTO) {
+    public PlayerDTO create(@RequestBody @Valid PlayerDTO playerDTO) {
         return playerService.create(playerDTO);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Player>> readAll() {
-        return mappingResponseListOfPlayer(playerService.readAllPlayers());
+    @GetMapping(("/"))
+    public List<PlayerDTO> readAll() {
+        return playerService.readAllPlayers();
     }
 
-    @GetMapping("/teams/{id}")
-    public ResponseEntity<List<Player>> readByTeamCategoryId(@PathVariable Long id) {
-        return mappingResponseListOfPlayer(playerService.readByCategoryId(id));
+    @GetMapping("/team-categories/{id}")
+    public List<PlayerDTO> readByTeamCategoryId(@PathVariable Long id) {
+        return playerService.readByCategoryId(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Player> update(@PathVariable Long id, @RequestBody @Valid PlayerDTO playerDTO) {
-        Player updatedPlayer = playerService.update(id, playerDTO);
-        return new ResponseEntity<>(updatedPlayer, HttpStatus.OK);
+    public PlayerDTO update(@PathVariable Long id, @RequestBody @Valid PlayerDTO playerDTO) {
+        return playerService.update(id, playerDTO);
     }
-
 
     @DeleteMapping("/{id}")
-    public HttpStatus delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         playerService.delete(id);
-        return HttpStatus.OK;
-    }
-
-    private ResponseEntity<List<Player>> mappingResponseListOfPlayer(List<Player> playerList) {
-        return new ResponseEntity<>(playerList, HttpStatus.OK);
     }
 }
