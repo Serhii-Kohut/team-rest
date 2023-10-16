@@ -1,6 +1,7 @@
 package co.inventorsoft.academy.demorest.controller;
 
 import co.inventorsoft.academy.demorest.entity.TeamCategory;
+import co.inventorsoft.academy.demorest.service.TeamCategoryService;
 import co.inventorsoft.academy.demorest.service.impl.TeamCategoryServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ import java.util.List;
 @RequestMapping("/teams")
 @AllArgsConstructor
 public class TeamCategoryController {
-    private final TeamCategoryServiceImpl teamCategoryService;
+    private final TeamCategoryService teamCategoryService;
 
     @GetMapping
     public ResponseEntity<List<TeamCategory>> readAllTeamCategory() {

@@ -2,6 +2,7 @@ package co.inventorsoft.academy.demorest.controller;
 
 import co.inventorsoft.academy.demorest.dto.PlayerDTO;
 import co.inventorsoft.academy.demorest.entity.Player;
+import co.inventorsoft.academy.demorest.service.PlayerService;
 import co.inventorsoft.academy.demorest.service.impl.PlayerServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ import java.util.List;
 @RequestMapping("/players")
 @AllArgsConstructor
 public class PlayerController {
-    private final PlayerServiceImpl playerService;
+    private final PlayerService playerService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
