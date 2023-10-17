@@ -39,12 +39,12 @@ public class PlayerController {
         return playerService.readByCategoryId(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{/id}")
     public PlayerDTO update(@PathVariable Long id, @RequestBody @Valid PlayerDTO playerDTO) {
         return playerService.update(id, playerDTO);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{/id}")
     public void delete(@PathVariable Long id) {
         playerService.delete(id);
     }
