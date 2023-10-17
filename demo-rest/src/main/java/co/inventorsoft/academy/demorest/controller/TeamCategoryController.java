@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/team-categories/")
+@RequestMapping("/team-categories")
 @AllArgsConstructor
 public class TeamCategoryController {
     private final TeamCategoryService teamCategoryService;
 
-    @GetMapping("/")
+    @GetMapping
     public List<TeamCategoryDTO> readAllTeamCategory() {
         return teamCategoryService.readAll();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("{/id}")
     public TeamCategoryDTO readTeamCategoryById(@PathVariable Long id) {
         return teamCategoryService.readById(id);
     }
