@@ -21,7 +21,7 @@ public class TeamCategoryController {
         return teamCategoryService.readAll();
     }
 
-    @GetMapping("{/id}")
+    @GetMapping("/{id}")
     public TeamCategoryDTO readTeamCategoryById(@PathVariable Long id) {
         return teamCategoryService.readById(id);
     }
