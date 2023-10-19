@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/auth/register", "/auth/authenticate").permitAll()
-                        .requestMatchers("/auth/user-endpoint", "/set-admin/**").authenticated()
+                        .requestMatchers("/auth/user-endpoint", "/to-admin/**").authenticated()
                         .requestMatchers("/players", "/players/**").authenticated()
                         .requestMatchers("/auth/admin-endpoint").hasRole("ADMIN")
                         .requestMatchers("/team-categories/**").hasRole("ADMIN")

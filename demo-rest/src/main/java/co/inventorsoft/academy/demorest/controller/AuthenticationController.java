@@ -35,7 +35,7 @@ public class AuthenticationController {
         return ResponseEntity.ok("You are authorized!");
     }
 
-    @PutMapping("/set-admin/{email}")
+    @PutMapping("/to-admin/{email}")
     public ResponseEntity<String> setAdmin(@PathVariable String email) {
         authenticationService.setAdmin(email);
         return ResponseEntity.ok("User " + email + " is now an admin.");
