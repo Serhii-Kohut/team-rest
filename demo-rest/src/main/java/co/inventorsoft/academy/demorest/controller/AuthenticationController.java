@@ -2,8 +2,8 @@ package co.inventorsoft.academy.demorest.controller;
 
 import co.inventorsoft.academy.demorest.dto.auth.AuthenticationRequest;
 import co.inventorsoft.academy.demorest.dto.auth.AuthenticationResponse;
-import co.inventorsoft.academy.demorest.service.auth.AuthenticationService;
 import co.inventorsoft.academy.demorest.dto.auth.RegisterRequest;
+import co.inventorsoft.academy.demorest.service.auth.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.springframework.security.authorization.AuthorityReactiveAuthorizationManager.hasAuthority;
 
 @RestController
 @RequestMapping("/auth")
