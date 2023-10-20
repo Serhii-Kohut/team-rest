@@ -49,10 +49,7 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .toList();
-        extraClaims.put("roles", roles);
+        extraClaims.put("roles", userDetails.getAuthorities());
 
         return Jwts.builder()
                 .setClaims(extraClaims)
