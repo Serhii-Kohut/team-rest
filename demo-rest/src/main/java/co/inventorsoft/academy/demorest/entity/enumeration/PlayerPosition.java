@@ -1,4 +1,4 @@
-package co.inventorsoft.academy.demorest.entity;
+package co.inventorsoft.academy.demorest.entity.enumeration;
 
 public enum PlayerPosition {
     GOALKEEPER,

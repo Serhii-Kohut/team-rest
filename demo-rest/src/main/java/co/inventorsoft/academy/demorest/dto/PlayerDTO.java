@@ -1,6 +1,6 @@
 package co.inventorsoft.academy.demorest.dto;
 
-import co.inventorsoft.academy.demorest.entity.PlayerPosition;
+import co.inventorsoft.academy.demorest.entity.enumeration.PlayerPosition;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

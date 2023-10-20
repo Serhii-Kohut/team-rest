@@ -1,11 +1,12 @@
 package co.inventorsoft.academy.demorest.controller;
 
-import co.inventorsoft.academy.demorest.auth.AuthenticationRequest;
-import co.inventorsoft.academy.demorest.auth.AuthenticationResponse;
-import co.inventorsoft.academy.demorest.auth.AuthenticationService;
-import co.inventorsoft.academy.demorest.auth.RegisterRequest;
+import co.inventorsoft.academy.demorest.dto.auth.AuthenticationRequest;
+import co.inventorsoft.academy.demorest.dto.auth.AuthenticationResponse;
+import co.inventorsoft.academy.demorest.service.auth.AuthenticationService;
+import co.inventorsoft.academy.demorest.dto.auth.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.security.authorization.AuthorityReactiveAuthorizationManager.hasAuthority;
 
 @RestController
 @RequestMapping("/auth")
@@ -41,6 +44,7 @@ public class AuthenticationController {
         return ResponseEntity.ok("User " + email + " is now an admin.");
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/admin-endpoint")
     public ResponseEntity<String> adminEndpoint() {
         return ResponseEntity.ok("You are an admin!");

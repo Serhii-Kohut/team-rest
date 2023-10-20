@@ -1,4 +1,4 @@
-package co.inventorsoft.academy.demorest.auth;
+package co.inventorsoft.academy.demorest.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthenticationRequest {
-    private String email;
-    String password;
+public class AuthenticationResponse {
+    private String token;
 }
