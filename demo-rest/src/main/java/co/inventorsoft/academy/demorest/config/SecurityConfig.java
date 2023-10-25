@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 
 
@@ -28,7 +30,14 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.configurationSource(request ->
                         new CorsConfiguration().applyPermitDefaultValues()))
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(csrf -> csrf
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .ignoringRequestMatchers(
+                                new AntPathRequestMatcher("/auth/**"),
+                                new AntPathRequestMatcher("/players/**"),
+                                new AntPathRequestMatcher("/team-categories/**"),
+                                new AntPathRequestMatcher("/cors/**")
+                        ))
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/auth/register", "/auth/authenticate").permitAll()
                         .anyRequest().authenticated())
