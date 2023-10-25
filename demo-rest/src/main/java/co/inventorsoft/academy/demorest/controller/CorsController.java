@@ -14,7 +14,6 @@ public class CorsController {
     public ResponseEntity<String> localhostEndpoint() {
         return ResponseEntity.ok("This endpoint is only for localhost");
     }
-
     @CrossOrigin(origins = "*")
     @GetMapping("/public-endpoint")
     public ResponseEntity<String> publicEndpoint() {
