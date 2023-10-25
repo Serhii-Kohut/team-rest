@@ -15,7 +15,7 @@ public class CsrfController {
     public ResponseEntity<String> submitForm(@RequestBody String body, HttpServletRequest request) {
         CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
 
-        if (csrfToken != null || !csrfToken.getToken().equals(body)) {
+        if (csrfToken == null || !csrfToken.getToken().equals(body)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid CSRF token");
         }
         return ResponseEntity.ok("Form submitted successfully");
