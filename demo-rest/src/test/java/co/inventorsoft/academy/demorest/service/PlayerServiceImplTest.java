@@ -29,7 +29,7 @@ public class PlayerServiceImplTest {
     @Mock
     private TeamCategoryRepository teamCategoryRepository;
     @InjectMocks
-    private PlayerServiceImpl playerService;
+    private PlayerServiceImpl playerServiceImpl;
 
     @Test
     public void createPlayerTest() {
@@ -47,7 +47,7 @@ public class PlayerServiceImplTest {
         when(teamCategoryRepository.findById(1L)).thenReturn(Optional.of(teamCategory));
         when(playerRepository.save(any(Player.class))).thenReturn(player);
 
-        PlayerDTO playerDTOResult = playerService.create(playerDTO);
+        PlayerDTO playerDTOResult = playerServiceImpl.create(playerDTO);
 
         assertNotNull(playerDTOResult);
         assertEquals(player.getPlayerName(), playerDTOResult.getPlayerName());
@@ -67,7 +67,7 @@ public class PlayerServiceImplTest {
 
         when(playerRepository.findAll()).thenReturn(Arrays.asList(player1, player2));
 
-        List<PlayerDTO> playerDTOList = playerService.readAllPlayers();
+        List<PlayerDTO> playerDTOList = playerServiceImpl.readAllPlayers();
 
         assertNotNull(playerDTOList);
 
@@ -88,7 +88,7 @@ public class PlayerServiceImplTest {
 
         when(playerRepository.findPlayersByTeamCategoryId(1L)).thenReturn(Collections.singletonList(player));
 
-        List<PlayerDTO> playerDTOList = playerService.readByCategoryId(1L);
+        List<PlayerDTO> playerDTOList = playerServiceImpl.readByCategoryId(1L);
 
         assertNotNull(playerDTOList);
 
@@ -115,7 +115,7 @@ public class PlayerServiceImplTest {
         when(playerRepository.findById(1L)).thenReturn(Optional.of(player));
         when(teamCategoryRepository.findById(1L)).thenReturn(Optional.of(teamCategory));
 
-        PlayerDTO playerDTOResult = playerService.update(1L, playerDTO);
+        PlayerDTO playerDTOResult = playerServiceImpl.update(1L, playerDTO);
 
         assertNotNull(playerDTOResult);
 
@@ -126,6 +126,6 @@ public class PlayerServiceImplTest {
     public void deletePlayerTest() {
         doNothing().when(playerRepository).deleteById(1L);
 
-        assertDoesNotThrow(() -> playerService.delete(1L));
+        assertDoesNotThrow(() -> playerServiceImpl.delete(1L));
     }
 }
