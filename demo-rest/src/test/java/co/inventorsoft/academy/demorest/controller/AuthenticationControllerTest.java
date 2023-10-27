@@ -1,4 +1,4 @@
-package co.inventorsoft.academy.demorest;
+package co.inventorsoft.academy.demorest.controller;
 
 import co.inventorsoft.academy.demorest.dto.auth.AuthenticationRequest;
 import co.inventorsoft.academy.demorest.dto.auth.AuthenticationResponse;
@@ -124,7 +124,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    public void testSetAdmin() throws Exception {
+    public void testSetAndCheckAdmin() throws Exception {
         AuthenticationRequest authenticationRequest = new AuthenticationRequest();
         authenticationRequest.setEmail("test@gmail.com");
         authenticationRequest.setPassword("password");
