@@ -4,12 +4,16 @@ import co.inventorsoft.academy.demorest.entity.enumeration.PlayerPosition;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class PlayerDTO {
     private Long id;
     @NotBlank
