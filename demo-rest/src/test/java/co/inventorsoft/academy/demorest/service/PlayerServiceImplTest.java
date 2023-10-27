@@ -17,10 +17,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 public class PlayerServiceImplTest {
@@ -95,5 +95,37 @@ public class PlayerServiceImplTest {
         assertEquals(1, playerDTOList.size());
         assertEquals(player.getPlayerName(), playerDTOList.get(0).getPlayerName());
         assertEquals(player.getTeamCategory().getId(), playerDTOList.get(0).getTeamCategoryId());
+    }
+
+    @Test
+    public void updatePlayerTest() {
+        Player player = new Player();
+        player.setId(1L);
+        player.setPlayerName("Original player");
+        player.setTeamCategory(new TeamCategory(1L, "Test"));
+
+        PlayerDTO playerDTO = new PlayerDTO();
+        playerDTO.setId(1L);
+        playerDTO.setPlayerName("Updated player");
+        playerDTO.setTeamCategoryId(1L);
+
+        TeamCategory teamCategory = new TeamCategory();
+        teamCategory.setId(1L);
+
+        when(playerRepository.findById(1L)).thenReturn(Optional.of(player));
+        when(teamCategoryRepository.findById(1L)).thenReturn(Optional.of(teamCategory));
+
+        PlayerDTO playerDTOResult = playerService.update(1L, playerDTO);
+
+        assertNotNull(playerDTOResult);
+
+        assertEquals(playerDTO.getPlayerName(), playerDTOResult.getPlayerName());
+    }
+
+    @Test
+    public void deletePlayerTest() {
+        doNothing().when(playerRepository).deleteById(1L);
+
+        assertDoesNotThrow(() -> playerService.delete(1L));
     }
 }
